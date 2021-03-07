@@ -1,0 +1,21 @@
+<%- include("partials/header") -%>
+<%- include("partials/sidebar") -%>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Add Item</h1>
+</div>
+
+<!-- Add Item form -->
+<form action="/AddItem" method="POST">
+  <div class="form-group">
+    <label for="item">Item name</label>
+    <input type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="text" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Add Item</button>
+</form>
+
+<%- include("partials/footer") -%>
