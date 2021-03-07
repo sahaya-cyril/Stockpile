@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -11,27 +12,41 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+mongoose.connect("mongodb://localhost:27017/StockpileDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
-const items = [];
+const itemSchema = {
+  item: String,
+  price: String
+};
+
+const Item = mongoose.model("Item", itemSchema);
 
 app.get("/", (req, res) => {
     res.render("home");
 });
 
 app.get("/AddItem", (req, res) => {
-    res.render("AddItem", {
+    Item.find({}, (err, items) => {
+        res.render("AddItem", {
         items: items
+        });
     });
 });
 
 app.post("/AddItem", (req, res) => {
-    const item = {
+    const additem = new Item({
         item: req.body.item,
         price: req.body.price
-    } 
-    items.push(item);
+    }); 
+    additem.save((err) => {
+        if(!err) {
+            res.redirect("/AddItem");
+        }
+    });
+});
 
-    res.redirect("/AddItem");
+app.get("/PurchaseItems", (req, res) => {
+    res.render("PurchaseItems");
 });
 
 app.listen(3000, () => {
