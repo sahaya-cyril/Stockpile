@@ -11,12 +11,27 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+
+const items = [];
+
 app.get("/", (req, res) => {
     res.render("home");
 });
 
 app.get("/AddItem", (req, res) => {
-    res.render("AddItem");
+    res.render("AddItem", {
+        items: items
+    });
+});
+
+app.post("/AddItem", (req, res) => {
+    const item = {
+        item: req.body.item,
+        price: req.body.price
+    } 
+    items.push(item);
+
+    res.redirect("/AddItem");
 });
 
 app.listen(3000, () => {
