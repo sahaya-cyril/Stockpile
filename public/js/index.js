@@ -2,7 +2,6 @@ $(function () {
     $("#ddlitem").change(function () {
         $(this).find("option:selected").text();
         const item = $(this).val();
-        console.log(item);
         const elements = item.split(",");
 
         document.getElementById("price").value = elements[0];
@@ -25,7 +24,5 @@ $(function () {
         document.getElementById("total").value = quantity * price;
 
         var currsto = document.getElementById("currentStock").value = stock + quantity;
-        console.log("st: " + stock);
-        console.log("cs: " + currsto);
     });
 });
