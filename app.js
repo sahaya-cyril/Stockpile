@@ -16,6 +16,7 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost:27017/StockpileDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
 const itemSchema = {
+    custName: {type: String, default: "Admin"},
     item: String,
     price: String,
     bill: {type: Date, default: Date.now()},
@@ -92,7 +93,12 @@ app.get("/invoice", (req, res) => {
 });
 
 app.get("/SellItem", (req, res) => {
+    const start = Date.now();
+    Item.find({}, (err, items) => {
         res.render("SellItem", {
+            items: items,
+            date: start
+        });
     });
 });
 
