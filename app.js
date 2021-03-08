@@ -86,6 +86,11 @@ app.get("/MyStock", (req, res) => {
     });
 });
 
+app.get("/invoice", (req, res) => {
+        res.render("invoice", {
+    });
+});
+
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
