@@ -1,0 +1,28 @@
+<%- include("partials/header") -%>
+<%- include("partials/sidebar") -%>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Stock Item</h1>
+</div>
+
+<!-- STOCK TABLE -->
+<div class="container pt-4 m-0">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Item Name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+<%  items.forEach(function(item){ %>
+  <tbody>
+    <tr>
+        <td><%= item.item %></td>
+        <td><%= item.quantity %></td>
+    </tr>
+  </tbody>    
+<%  }) %>
+</table>
+</div>
+
+<%- include("partials/footer") -%>

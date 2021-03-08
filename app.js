@@ -51,7 +51,6 @@ app.post("/AddItem", (req, res) => {
 
 app.get("/PurchaseItems", (req, res) => {
     Item.find({}, (err, items) => {
-        // var items = JSON.parse(items);
         res.render("PurchaseItems", {
             items: items
         });
@@ -72,6 +71,14 @@ app.post("/PurchaseItems", (req, res) => {
         } else {
             console.log(err);
         }
+    });
+});
+
+app.get("/MyStock", (req, res) => {
+    Item.find({}, (err, items) => {
+        res.render("MyStock", {
+            items: items
+        });
     });
 });
 
