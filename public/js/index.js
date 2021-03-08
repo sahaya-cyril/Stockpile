@@ -4,9 +4,13 @@ $(function () {
         const item = $(this).val();
         const elements = item.split(",");
 
+        console.log(elements, elements[2]);
+
         document.getElementById("price").value = elements[0];
         document.getElementById("quantity").value = 0;
         document.getElementById("stock").value = elements[2];
+
+        document.getElementById("totalAmount").value = quantity * price;
     });
     $(".input").on('input', function() {
         var quantity = document.getElementById("quantity").value;
@@ -21,8 +25,7 @@ $(function () {
         if(Number.isNaN(quantity)) {
             quantity = 0;
         }
-        document.getElementById("total").value = quantity * price;
-
-        var currsto = document.getElementById("currentStock").value = stock + quantity;
+        document.getElementById("amount").value = quantity * price;        
+        document.getElementById("currentStock").value = stock + quantity;
     });
 });

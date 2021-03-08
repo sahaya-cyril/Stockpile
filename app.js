@@ -16,11 +16,11 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost:27017/StockpileDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
 const itemSchema = {
-    invoice: String,
     item: String,
     price: String,
-    bill: {type: Date, default: Date.now},
+    bill: {type: Date, default: Date.now()},
     quantity: {type: Number, default: 0},
+    amount : {type: Number, default: 0},
     stock: {type: Number, default: 0}
 };
 
@@ -67,8 +67,9 @@ app.post("/PurchaseItems", (req, res) => {
     const stock = req.body.currentStock;
     const quantity = req.body.quantity;
     const price = req.body.price;
+    const amount = req.body.amount;
 
-    Item.findOneAndUpdate({item:items[3]},{$set:{bill: bill, stock: stock, quantity: quantity, price: price}}, (err, data) => {
+    Item.findOneAndUpdate({item:items[3]},{$set:{bill: bill, stock: stock, quantity: quantity, price: price, amount: amount}}, (err, data) => {
         if(!err) {
             res.redirect("/PurchaseItems");
         } else {
