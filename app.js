@@ -15,8 +15,11 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost:27017/StockpileDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
 const itemSchema = {
-  item: String,
-  price: String
+    item: String,
+    price: String,
+    bill: Date,
+    quantity: {type: Number, default: 0},
+    stock: {type: Number, default: 0}
 };
 
 const Item = mongoose.model("Item", itemSchema);
@@ -46,7 +49,16 @@ app.post("/AddItem", (req, res) => {
 });
 
 app.get("/PurchaseItems", (req, res) => {
-    res.render("PurchaseItems");
+    Item.find({}, (err, items) => {
+        // var items = JSON.parse(items);
+        res.render("PurchaseItems", {
+            items: items
+        });
+    });
+});
+
+app.post("/PurchaseItems", (req, res) => {
+    
 });
 
 app.listen(3000, () => {

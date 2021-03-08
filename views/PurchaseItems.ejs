@@ -8,36 +8,38 @@
 <!-- PURCHASE FORM -->
 <form action="/PurchaseItems" method="POST">
   <div class="form-row">
-    <div class="form-group col-md-4">
+<!--<div class="form-group col-md-4">
       <label for="invoice">Invoice No</label>
-      <input type="text" class="form-control" name="invoice">
+      <input type="text" class="form-control" name="invoice" readonly>
+    </div> -->
+    <div class="form-group col-md-4">
+      <label for="itemName">Item Name</label>
+      <select id="ddlitem" name="itemName" class="form-control">
+        <option selected>Choose...</option>
+        <% items.forEach(function(item) {%>
+        <option value="<%= [item.price , item.quantity, item.stock] %>"><%= item.item %></option>
+        <% }) %>
+      </select>
     </div>
     <div class="form-group col-md-4">
       <label for="bill">Bill Date</label>
       <input type="date" class="form-control" name="bill">
     </div>
     <div class="form-group col-md-4">
-      <label for="itemName">Item Name</label>
-      <select name="itemName" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="form-group col-md-3">
-      <label for="quantity">Quantity</label>
-      <input type="text" class="form-control" name="quantity">
-    </div>
-    <div class="form-group col-md-3">
       <label for="stock">Total Stock</label>
-      <input type="text" class="form-control" name="stock">
+      <input type="text" id="stock" class="form-control" name="stock" value= "" readonly>
     </div>
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-4">
+      <label for="quantity">Quantity</label>
+      <input type="text" id="quantity" class="input form-control" name="quantity" value="">
+    </div>
+    <div class="form-group col-md-4">
       <label for="price">Price</label>
-      <input type="text" class="form-control" name="price">
+      <input type="text" id="price" class="input form-control" name="price" value="" readonly>
     </div>
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-4">
       <label for="total">Total</label>
-      <input type="text" class="form-control" name="total">
+      <input type="text" id="total" class="input form-control" name="total">
     </div>
   </div>
  
