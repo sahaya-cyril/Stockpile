@@ -91,6 +91,11 @@ app.get("/invoice", (req, res) => {
     });
 });
 
+app.get("/SellItem", (req, res) => {
+        res.render("SellItem", {
+    });
+});
+
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
