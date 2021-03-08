@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 app.set('view engine', 'ejs');
+mongoose.set('useFindAndModify', false);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -17,7 +18,7 @@ mongoose.connect("mongodb://localhost:27017/StockpileDB", {useNewUrlParser: true
 const itemSchema = {
     item: String,
     price: String,
-    bill: Date,
+    bill: {type: Date, default: Date.now},
     quantity: {type: Number, default: 0},
     stock: {type: Number, default: 0}
 };
@@ -58,7 +59,20 @@ app.get("/PurchaseItems", (req, res) => {
 });
 
 app.post("/PurchaseItems", (req, res) => {
-    
+    const elements = req.body.itemName;
+    const items = elements.split(",");
+    const bill = req.body.bill;
+    const stock = req.body.currentStock;
+    const quantity = req.body.quantity;
+    const price = req.body.price;
+
+    Item.findOneAndUpdate({item:items[3]},{$set:{bill: bill, stock: stock, quantity: quantity, price: price}}, (err, data) => {
+        if(!err) {
+            res.redirect("/PurchaseItems");
+        } else {
+            console.log(err);
+        }
+    });
 });
 
 app.listen(3000, () => {

@@ -2,10 +2,11 @@ $(function () {
     $("#ddlitem").change(function () {
         $(this).find("option:selected").text();
         const item = $(this).val();
-        const elements = item.split(",")
+        console.log(item);
+        const elements = item.split(",");
 
         document.getElementById("price").value = elements[0];
-        document.getElementById("quantity").value = elements[1];
+        document.getElementById("quantity").value = 0;
         document.getElementById("stock").value = elements[2];
     });
     $(".input").on('input', function() {
@@ -15,10 +16,16 @@ $(function () {
         var price = document.getElementById("price").value;
         price = parseFloat(price);
 
+        var stock = document.getElementById("stock").value;
+        stock = parseFloat(stock);
+
         if(Number.isNaN(quantity)) {
             quantity = 0;
         }
         document.getElementById("total").value = quantity * price;
-        console.log(quantity + price);
+
+        var currsto = document.getElementById("currentStock").value = stock + quantity;
+        console.log("st: " + stock);
+        console.log("cs: " + currsto);
     });
 });

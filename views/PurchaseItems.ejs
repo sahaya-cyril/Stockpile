@@ -8,16 +8,12 @@
 <!-- PURCHASE FORM -->
 <form action="/PurchaseItems" method="POST">
   <div class="form-row">
-<!--<div class="form-group col-md-4">
-      <label for="invoice">Invoice No</label>
-      <input type="text" class="form-control" name="invoice" readonly>
-    </div> -->
     <div class="form-group col-md-4">
       <label for="itemName">Item Name</label>
       <select id="ddlitem" name="itemName" class="form-control">
         <option selected>Choose...</option>
         <% items.forEach(function(item) {%>
-        <option value="<%= [item.price , item.quantity, item.stock] %>"><%= item.item %></option>
+        <option value="<%= [item.price , item.quantity, item.stock, item.item] %>"><%= item.item %></option>
         <% }) %>
       </select>
     </div>
@@ -27,7 +23,8 @@
     </div>
     <div class="form-group col-md-4">
       <label for="stock">Total Stock</label>
-      <input type="text" id="stock" class="form-control" name="stock" value= "" readonly>
+      <input type="text" id="stock" class="input form-control" name="stock" value= "" readonly>
+      <input type="text" id="currentStock" class="input form-control" name="currentStock" value= "" hidden>
     </div>
     <div class="form-group col-md-4">
       <label for="quantity">Quantity</label>
@@ -42,7 +39,28 @@
       <input type="text" id="total" class="input form-control" name="total">
     </div>
   </div>
- 
   <button type="submit" class="btn btn-primary">Add Item</button>
 </form>
+
+<!-- STOCK TABLE -->
+<div class="container pt-4 m-0">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Item</th>
+      <th scope="col">Price</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+<%  items.forEach(function(item){ %>
+  <tbody>
+    <tr>
+        <td><%= item.item %></td>
+        <td><%= item.price %></td>
+        <td>@mdo</td>
+    </tr>
+  </tbody>    
+<%  }) %>
+</table>
+</div>
 <%- include("partials/footer") -%>
