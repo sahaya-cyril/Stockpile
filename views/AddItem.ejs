@@ -25,7 +25,7 @@
     <tr>
       <th scope="col">Item</th>
       <th scope="col">Price</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Stock</th>
     </tr>
   </thead>
 <%  items.forEach(function(item){ %>
@@ -33,7 +33,7 @@
     <tr>
         <td><%= item.item %></td>
         <td><%= item.price %></td>
-        <td>@mdo</td>
+        <td><%= item.stock %></td>
     </tr>
   </tbody>    
 <%  }) %>

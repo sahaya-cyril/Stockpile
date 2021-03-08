@@ -4,14 +4,9 @@ $(function () {
         const item = $(this).val();
         const elements = item.split(",");
 
-        console.log(elements, elements[2]);
-
-        document.getElementById("price").value = elements[0];
-        document.getElementById("quantity").value = 0;
-        document.getElementById("stock").value = elements[2];
-
-        document.getElementById("totalAmount").value = quantity * price;
+        document.getElementById("price").value = elements[1];
     });
+
     $(".input").on('input', function() {
         var quantity = document.getElementById("quantity").value;
         quantity = parseFloat(quantity);
@@ -25,7 +20,12 @@ $(function () {
         if(Number.isNaN(quantity)) {
             quantity = 0;
         }
-        document.getElementById("amount").value = quantity * price;        
-        document.getElementById("currentStock").value = stock + quantity;
+        document.getElementById("amount").value = quantity * price;
+        
+        if(document.getElementById("#addItemBtn").value === "sell") {
+            document.getElementById("currentStock").value = stock - quantity;
+        } else {
+            document.getElementById("currentStock").value = stock + quantity;
+        }
     });
 });
