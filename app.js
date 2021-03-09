@@ -21,19 +21,17 @@ const itemSchema = {
     stock: {type: Number, default: 0}
 };
 
-const orderSchema = {
-    invoiceNo: Number,
-    custName: String,
-    itemName: String,
+const cartSchema = {
+    item: String,
+    bill: {type: Date, default: Date()},
+    stock: Number,
     quantity: Number,
     price: Number,
-    totalAmount: Number,
-    bill: {type: Date, default: Date()},
-    itemStock: [itemSchema.stock.default]
+    amount: Number,
 };
 
 const Item = mongoose.model("Item", itemSchema);
-const Order = mongoose.model("Order", orderSchema);
+const Cart = mongoose.model("Cart", cartSchema);
 
 app.get("/", (req, res) => {
     res.render("home");
@@ -63,7 +61,8 @@ app.get("/PurchaseItems", (req, res) => {
     const start = Date.now();
     Item.find({}, (err, items) => {
         res.render("PurchaseItems", {
-            items: items
+            items: items,
+            date: start
         });
     });
 });
@@ -71,19 +70,28 @@ app.get("/PurchaseItems", (req, res) => {
 app.post("/PurchaseItems", (req, res) => {
     const elements =  req.body.itemName;
     const itemName = elements.split(",");
+    const price = req.body.price;
+    const stock = req.body.currentStock;
 
-    const orderItem = new Order({
-        item: itemName,
+    const cartItem = new Cart({
+        item: itemName[0],
         bill: req.body.bill,
-        itemStock: req.body.currentStock,
+        stock: req.body.currentStock,
         quantity: req.body.quantity,
         price: req.body.price,
-        totalAmount: req.body.amount
+        amount: req.body.amount
     });
-
-    orderItem.save((err) => {
+    cartItem.save((err) => {
         if(!err) {
-            res.redirect("/PurchaseItems");
+            Item.findOneAndUpdate({item: itemName[0]}, {$set:{price: price, stock: stock}}, (err, data) => {
+                if(!err) {
+                    res.redirect("/PurchaseItems");
+                } else {
+                    console.log(err);
+                }
+            });
+        } else {
+            console.log(err);
         }
     });
 
@@ -94,48 +102,6 @@ app.post("/PurchaseItems", (req, res) => {
             console.log(err);
         }
     }); */
-});
-
-app.get("/MyStock", (req, res) => {
-    Item.find({}, (err, items) => {
-        res.render("MyStock", {
-            items: items
-        });
-    });
-});
-
-app.get("/invoice", (req, res) => {
-        res.render("invoice", {
-    });
-});
-
-app.get("/SellItem", (req, res) => {
-    const start = Date.now();
-    Item.find({}, (err, items) => {
-        res.render("SellItem", {
-            items: items,
-            date: start
-        });
-    });
-});
-
-app.post("/SellItem", (req, res) => {
-    const custName = req.body.customerName;
-    const elements = req.body.itemName;
-    const items = elements.split(",");
-    const bill = req.body.bill;
-    const stock = req.body.currentStock;
-    const quantity = req.body.quantity;
-    const price = req.body.price;
-    const amount = req.body.amount;
-
-    Item.findOneAndUpdate({item:items[3]},{$set:{custName: custName, bill: bill, stock: stock, quantity: quantity, price: price, amount: amount}}, (err, data) => {
-        if(!err) {
-            res.redirect("/SellItem");
-        } else {
-            console.log(err);
-        }
-    });
 });
 
 app.listen(3000, () => {
