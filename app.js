@@ -100,9 +100,6 @@ app.post("/PurchaseItems", (req, res) => {
 
     const query = Cart.where({item: itemName[0]});
     query.findOne((err, result) => {
-        console.log(typeof(result));
-        console.log(result);
-
         if(result || !result) {
             if(!result) {
                 var quantity = 0 + parseInt(req.body.quantity);
@@ -111,15 +108,9 @@ app.post("/PurchaseItems", (req, res) => {
                 var quantity = parseInt(result.quantity) + parseInt(req.body.quantity);
                 var amount = parseInt(result.amount) + parseInt(req.body.amount);
             }
-            console.log(quantity, amount, itemName[0]);
-            console.log({bill: req.body.bill, stock: req.body.currentStock, quantity: quantity, price: req.body.price, amount: amount});
-
             Cart.findOneAndUpdate({item: itemName[0]}, {$set:{bill: req.body.bill, stock: req.body.currentStock, quantity: quantity, price: req.body.price, amount: amount}}, (err, data) => {
-                console.log("Data:", data);
-
                 if(!err) {
                     Item.findOneAndUpdate({item: itemName[0]}, {$set:{price: price, stock: stock}}, (err, data) => {
-                        console.log("DAta:", data);
                         if(!err) {
                             res.redirect("/PurchaseItems");
                         } else {
