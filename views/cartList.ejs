@@ -16,12 +16,12 @@
         <tr class="mb-2 mb-sm-0 py-25 bgc-default-l4">
                 <td><%= list.item %></td>
                 <td><%= list.quantity %></td>
-                <td><%= list.amount %></td>
+                <td>₹<%= list.amount %></td>
         </tr>
         </tbody>
     <%  }) %>
     </table>
-    <h4>Total Amount: <%= totalAmount %></h4>
-        <button class="btn btn-primary" type="submit">Buy</button>
+    <h4>Total Amount: ₹<%= totalAmount %></h4>
     </div>
+    <button type="submit" class="btn btn-primary">Buy</button>
 </form>

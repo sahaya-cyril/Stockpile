@@ -140,7 +140,7 @@ app.post("/invoice", (req, res) => {
     const price = req.body.price;
     const amount = req.body.amount;
     
-
+    res.redirect("/invoice");
 /*     Cart.aggregate([{$group: {$item: $itemName, Quantity: {$sum: $quantity}, Price: {$sum: $price}, Amount: {$sum: $amount}}}], (err, cartList) => {
         if(err) {
             console.log(err);
