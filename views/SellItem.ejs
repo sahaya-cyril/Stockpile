@@ -33,18 +33,19 @@
     </div>
     <div class="form-group col-md-4">
       <label for="quantity">Quantity</label>
-      <input type="text" id="quantity" class="sellInput form-control" name="quantity" value="">
+      <input type="text" id="quantity" class="sellInput form-control" name="quantity" value="" autocomplete="off">
     </div>
     <div class="form-group col-md-4">
       <label for="price">Price</label>
       <input type="text" id="price" class="sellInput form-control" name="price" value="" readonly>
+      <label for="gst" name="gst" hidden></label>
     </div>
     <div class="form-group col-md-4">
       <label for="amount">Total</label>
-      <input type="text" id="amount" class="sellInput form-control" name="amount" readonly>
+      <input type="text" id="amount" class="sellInput form-control" name="amount" value="0" readonly>
     </div>
   </div>
-  <button type="submit" id="addItemBtn" value="sell" class="btn btn-primary">Add Item</button>
+  <button type="submit" id="addItemBtn" value="sell" class="btn btn-primary">Sell Item</button>
 </form>
 
 <!-- STOCK TABLE -->

@@ -31,7 +31,7 @@ const cartSchema = {
 };
 
 const custOrderSchema = {
-    custName: {type: String, default: "unknown"},
+    customerName: {type: String, default: "unknown"},
     item: {type: String, default: 0},
     bill: {type: Date, default: Date()},
     stock: {type: Number, default: 0},
@@ -176,11 +176,48 @@ app.get("/MyStock", (req, res) => {
 
 app.get("/SellItem", (req, res) => {
     const start = Date.now();
+
     Item.find({}, (err, items) => {
         res.render("SellItem", {
             items: items,
             date: start
         });
+    });
+});
+
+app.post("/SellItem", (req, res) => {
+    const elements =  req.body.itemName;
+    const itemName = elements.split(",");
+    const price = parseInt(req.body.price);
+    const stock = req.body.currentStock;
+    const gst = Math.round((price * 0.18) * 100)/100;
+
+    console.log(itemName[0], price, stock, gst);
+
+    const query = Order.where({item: itemName[0]});
+    query.findOne((err, result) => {
+        if(result || !result) {
+            if(!result) {
+                var quantity = 0 + parseInt(req.body.quantity);
+                var amount = 0 + parseInt(req.body.amount);
+            } else {
+                var quantity = parseInt(result.quantity) + parseInt(req.body.quantity);
+                var amount = parseInt(result.amount) + parseInt(req.body.amount);
+            }
+            Order.findOneAndUpdate({item: itemName[0]}, {$set:{customerName: req.body.customerName, bill: req.body.bill, stock: stock, quantity: quantity, price: price, gst: gst, amount: amount}}, (err, data) => {
+                if(!err) {
+                    Item.findOneAndUpdate({item: itemName[0]}, {$set:{price: price, stock: stock}}, (err, data) => {
+                        if(!err) {
+                            res.redirect("/SellItem");
+                        } else {
+                            console.log(err);
+                        }
+                    });
+                } else {
+                    console.log(err);
+                }
+            });
+        }
     });
 });
 
