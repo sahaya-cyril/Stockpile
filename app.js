@@ -105,11 +105,11 @@ app.post("/PurchaseItems", (req, res) => {
 
         if(result || !result) {
             if(!result) {
-                var quantity = 0 + req.body.quantity;
-                var amount = 0 + req.body.amount;
+                var quantity = 0 + parseInt(req.body.quantity);
+                var amount = 0 + parseInt(req.body.amount);
             } else {
-                var quantity = parseInt(result.quantity) + req.body.quantity;
-                var amount = parseInt(result.amount) + req.body.amount;
+                var quantity = parseInt(result.quantity) + parseInt(req.body.quantity);
+                var amount = parseInt(result.amount) + parseInt(req.body.amount);
             }
             console.log(quantity, amount, itemName[0]);
             console.log({bill: req.body.bill, stock: req.body.currentStock, quantity: quantity, price: req.body.price, amount: amount});
