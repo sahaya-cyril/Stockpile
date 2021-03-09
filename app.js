@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/StockpileDB", {useNewUrlParser: true, useUnifiedTopology: true});
-const trigger = true;
+
 const itemSchema = {
     item: {type: String, default: 0},
     price: {type: Number, default: 0},
@@ -141,6 +141,7 @@ app.post("/invoice", (req, res) => {
     const amount = req.body.amount;
     
     res.redirect("/invoice");
+
 /*     Cart.aggregate([{$group: {$item: $itemName, Quantity: {$sum: $quantity}, Price: {$sum: $price}, Amount: {$sum: $amount}}}], (err, cartList) => {
         if(err) {
             console.log(err);
