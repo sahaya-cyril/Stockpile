@@ -30,8 +30,20 @@ const cartSchema = {
     amount: {type: Number, default: 0}
 };
 
+const custOrderSchema = {
+    custName: {type: String, default: "unknown"},
+    item: {type: String, default: 0},
+    bill: {type: Date, default: Date()},
+    stock: {type: Number, default: 0},
+    quantity: {type: Number, default: 0},
+    gst: {type: Number, default: 0},
+    price: {type: Number, default: 0},
+    amount: {type: Number, default: 0}
+};
+
 const Item = mongoose.model("Item", itemSchema);
 const Cart = mongoose.model("Cart", cartSchema);
+const Order = mongoose.model("Order", custOrderSchema)
 
 app.get("/", (req, res) => {
     res.render("home");
