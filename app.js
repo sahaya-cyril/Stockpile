@@ -60,12 +60,27 @@ app.post("/AddItem", (req, res) => {
 app.get("/PurchaseItems", (req, res) => {
     const start = Date.now();
     Item.find({}, (err, items) => {
-        res.render("PurchaseItems", {
-            items: items,
-            date: start
-        });
+        if(items.length != 0) {
+            Cart.find({}, (err, cartList) => {
+                res.render("PurchaseItems", {
+                    items: items,
+                    date: start,
+                    cartList: cartList
+                });
+            });
+        } else {
+            res.render("PurchaseItems", {
+                items: items,
+                date: start,
+                cartList: cartList
+            });
+        }
     });
 });
+
+/* res.render("PurchaseItems", {
+            items: items,
+            date: start, */
 
 app.post("/PurchaseItems", (req, res) => {
     const elements =  req.body.itemName;
@@ -102,6 +117,10 @@ app.post("/PurchaseItems", (req, res) => {
             console.log(err);
         }
     }); */
+});
+
+app.get("/cartList", (req, res) => {
+    console.log("Hello!");
 });
 
 app.listen(3000, () => {

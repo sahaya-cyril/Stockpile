@@ -1,0 +1,22 @@
+<!-- TABLE -->
+<div class="container pt-4 m-0">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Item</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+<%  cartList.forEach(function(list){ %>
+  <tbody>
+    <tr>
+        <td><%= list.item %></td>
+        <td><%= list.price %></td>
+    </tr>
+  </tbody>  
+<%  }) %>
+</table>
+<div>
+    <button type="submit" id="buyBtn" class="btn btn-primary">Buy</button> 
+</div>
+</div>
