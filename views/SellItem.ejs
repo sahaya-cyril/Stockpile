@@ -48,8 +48,8 @@
   <button type="submit" id="addItemBtn" value="sell" class="btn btn-primary">Sell Item</button>
 </form>
 
-<!-- STOCK TABLE -->
-<!-- <div class="container pt-4 m-0">
+ <!-- Ordaer TABLE -->
+<div class="container pt-4 m-0">
 <table class="table">
   <thead>
     <tr>
@@ -58,12 +58,12 @@
       <th scope="col">Amount</th>
     </tr>
   </thead>
-<%  items.forEach(function(item){ %>
+<%  orders.forEach(function(order){ %>
   <tbody>
     <tr>
-        <td><%= item.item %></td>
-        <td><%= item.quantity %></td>
-        <td><%= item.amount %></td>
+        <td><%= order.item %></td>
+        <td><%= order.quantity %></td>
+        <td><%= order.amount %></td>
     </tr>
   </tbody>    
 <%  }) %>
@@ -71,6 +71,6 @@
 </div>
 <div>
     <a href="../invoice" class="btn btn-primary" role="button">Generate Invoice</a>
-</div> -->
+</div>
 
 <%- include("partials/footer") -%>

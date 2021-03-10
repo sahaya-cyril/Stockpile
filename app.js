@@ -178,10 +178,17 @@ app.get("/SellItem", (req, res) => {
     const start = Date.now();
 
     Item.find({}, (err, items) => {
-        res.render("SellItem", {
-            items: items,
-            date: start
-        });
+        if(!err) {
+            Order.find({}, (err, orders) => {
+                res.render("SellItem", {
+                    orders: orders,
+                    items: items,
+                    date: start
+                });
+            });
+        } else {
+            console.log(err);
+        }
     });
 });
 
@@ -225,7 +232,6 @@ app.post("/SellItem", (req, res) => {
         } else {
             var quantity = parseInt(result.quantity) + parseInt(req.body.quantity);
             var amount = parseInt(result.amount) + parseInt(req.body.amount);
-            console.log(quantity, amount);
         
             Order.findOneAndUpdate({item: itemName[0]}, {$set:{customerName: req.body.customerName, bill: req.body.bill, stock: stock, quantity: quantity, price: price, gst: gst, amount: amount}}, (err, data) => {
                 if(!err) {
