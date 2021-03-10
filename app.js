@@ -41,9 +41,17 @@ const custOrderSchema = {
     amount: {type: Number, default: 0},
 };
 
+const custHistorySchema = {
+    invoice: Number,
+    customerName: {type: String, default: "unknown"},
+    totalAmount: {type: Number, default: 0}
+
+};
+
 const Item = mongoose.model("Item", itemSchema);
 const Cart = mongoose.model("Cart", cartSchema);
-const Order = mongoose.model("Order", custOrderSchema)
+const Order = mongoose.model("Order", custOrderSchema);
+const History = mongoose.model("History", custHistorySchema);
 
 app.get("/", (req, res) => {
     res.render("home");
@@ -263,6 +271,22 @@ app.get("/sellInvoice", (req, res) => {
 
 app.post("/sellInvoice", (req, res) => {
     res.redirect("/sellInvoice")
+});
+
+app.post("/orderHist", (req, res) => {
+    const orderHist = new History({
+        invoice: req.body.invoice,
+        customerName: req.body.custName,
+        totalAmount: req.body.totalAmount
+    });
+
+    orderHist.save((err) => {
+        if(!err) {
+            res.redirect("/sellInvoice");
+        } else {
+            console.log(err);
+        }
+    });
 });
 
 app.listen(3000, () => {

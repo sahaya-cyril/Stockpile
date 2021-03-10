@@ -76,7 +76,9 @@
                         </tr>
                         </thead>
                         <%  var totalAmount = 0, totalGst = 0; %>
+                        <%   var custName; %>
                     <%  orderList.forEach(function(list) { %>
+                    <%   custName = list.customerName; %>
                     <%   totalAmount += list.amount; %>
                     <%   totalGst += list.gst; %>
                         <tbody>
@@ -112,10 +114,14 @@
                     </div>
 
                     <hr />
-
-                    <div>
-                        <a href="#" class="btn btn-primary btn-bold px-4 float-right mt-3 mt-lg-0">Proceed to checkout</a>
-                    </div>
+                    <form action="/orderHist" method="POST">
+                        <div>
+                            <input name="invoice" value=" <%= date %> " hidden>
+                            <input name="custName" value=" <%= custName %> " hidden>
+                            <input name="totalAmount" value=" <%= totalAmount %> " hidden>
+                            <button type="submit" class="btn btn-primary btn-bold px-4 float-right mt-3 mt-lg-0">Proceed to checkout</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
