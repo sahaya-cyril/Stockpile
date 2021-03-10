@@ -209,7 +209,7 @@ app.post("/SellItem", (req, res) => {
     const itemName = elements.split(",");
     const price = parseInt(req.body.price);
     const stock = req.body.currentStock;
-    const gst = Math.round((price * 0.18) * 100)/100;
+    const gst = Math.round(price * 0.18);
 
     const query = Order.where({item: itemName[0]});
     query.findOne((err, result) => {
