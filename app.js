@@ -54,7 +54,11 @@ const Order = mongoose.model("Order", custOrderSchema);
 const History = mongoose.model("History", custHistorySchema);
 
 app.get("/", (req, res) => {
-    res.render("home");
+    History.find({}, (err, historyList) => {
+        res.render("home", {
+            historyList: historyList,
+        });
+    });
 });
 
 app.get("/AddItem", (req, res) => {
@@ -271,6 +275,14 @@ app.get("/sellInvoice", (req, res) => {
 
 app.post("/sellInvoice", (req, res) => {
     res.redirect("/sellInvoice")
+});
+
+app.get("/orderHist", (req, res) => {
+    History.find({}, (err, historyList) => {
+        res.render("sellInvoice", {
+            historyList: historyList,
+        });
+    });
 });
 
 app.post("/orderHist", (req, res) => {

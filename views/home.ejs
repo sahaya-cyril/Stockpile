@@ -4,6 +4,26 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dashboard</h1>
                 </div>
-                <h3>Hello Stockpile!</h3>
+                <h3>Customer Order</h3>
+                    <div class="container pt-4 pb-4 m-0">
+                    <table class="table">
+                        <thead>
+                        <tr class="text-600 text-white bgc-default-tp1 py-25">
+                            <th scope="col">Invoice No.</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                        </thead>
+                    <%  historyList.forEach(function(list) { %>
+                        <tbody>
+                        <tr class="mb-2 mb-sm-0 py-25 bgc-default-l4">
+                                <td><%= list.invoice %></td>
+                                <td><%= list.customerName %></td>
+                                <td><%= list.totalAmount %></td>
+                        </tr>
+                        </tbody>
+                    <%  }); %>
+                    </table>
+                    </div>
                 
 <%- include("partials/footer") -%>
