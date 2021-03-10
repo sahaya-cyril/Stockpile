@@ -38,7 +38,7 @@ const custOrderSchema = {
     quantity: {type: Number, default: 0},
     gst: {type: Number, default: 0},
     price: {type: Number, default: 0},
-    amount: {type: Number, default: 0}
+    amount: {type: Number, default: 0},
 };
 
 const Item = mongoose.model("Item", itemSchema);
@@ -192,18 +192,41 @@ app.post("/SellItem", (req, res) => {
     const stock = req.body.currentStock;
     const gst = Math.round((price * 0.18) * 100)/100;
 
-    console.log(itemName[0], price, stock, gst);
-
     const query = Order.where({item: itemName[0]});
     query.findOne((err, result) => {
-        if(result || !result) {
-            if(!result) {
-                var quantity = 0 + parseInt(req.body.quantity);
-                var amount = 0 + parseInt(req.body.amount);
-            } else {
-                var quantity = parseInt(result.quantity) + parseInt(req.body.quantity);
-                var amount = parseInt(result.amount) + parseInt(req.body.amount);
-            }
+        if(!result) {
+            var quantity = 0 + parseInt(req.body.quantity);
+            var amount = 0 + parseInt(req.body.amount);
+
+            const orderList = new Order({
+                customerName: req.body.customerName,
+                item: itemName[0],
+                bill: req.body.bill,
+                stock: stock,
+                quantity: quantity,
+                gst: gst,
+                price: price,
+                amount: amount
+            });
+            
+            orderList.save((err) => {
+                if(!err) {
+                    Item.findOneAndUpdate({item: itemName[0]}, {$set:{price: price, stock: stock}}, (err, data) => {
+                        if(!err) {
+                            res.redirect("/SellItem");
+                        } else {
+                            console.log(err);
+                        }
+                    });
+                } else {
+                    console.log(err);
+                }
+            });
+        } else {
+            var quantity = parseInt(result.quantity) + parseInt(req.body.quantity);
+            var amount = parseInt(result.amount) + parseInt(req.body.amount);
+            console.log(quantity, amount);
+        
             Order.findOneAndUpdate({item: itemName[0]}, {$set:{customerName: req.body.customerName, bill: req.body.bill, stock: stock, quantity: quantity, price: price, gst: gst, amount: amount}}, (err, data) => {
                 if(!err) {
                     Item.findOneAndUpdate({item: itemName[0]}, {$set:{price: price, stock: stock}}, (err, data) => {
