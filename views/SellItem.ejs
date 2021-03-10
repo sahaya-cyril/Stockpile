@@ -49,28 +49,30 @@
 </form>
 
  <!-- Ordaer TABLE -->
-<div class="container pt-4 m-0">
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Item Name</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Amount</th>
-    </tr>
-  </thead>
-<%  orders.forEach(function(order){ %>
-  <tbody>
-    <tr>
-        <td><%= order.item %></td>
-        <td><%= order.quantity %></td>
-        <td><%= order.amount %></td>
-    </tr>
-  </tbody>    
-<%  }) %>
-</table>
-</div>
-<div>
-    <a href="../invoice" class="btn btn-primary" role="button">Generate Invoice</a>
-</div>
+<form action="/sellInvoice" method="POST">
+  <div class="container pt-4 m-0">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Item Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+  <%  orders.forEach(function(order){ %>
+    <tbody>
+      <tr>
+          <td><%= order.item %></td>
+          <td><%= order.quantity %></td>
+          <td><%= order.amount %></td>
+      </tr>
+    </tbody>    
+  <%  }) %>
+  </table>
+  </div>
+  <div>
+      <button type="submit" class="btn btn-primary">Sell</button>
+  </div>
+</form>
 
 <%- include("partials/footer") -%>

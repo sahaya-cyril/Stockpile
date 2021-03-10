@@ -250,6 +250,18 @@ app.post("/SellItem", (req, res) => {
     });
 });
 
+app.get("/sellInvoice", (req, res) => {
+    Order.find({}, (err, orderList) => {
+        res.render("sellInvoice", {
+            orderList: orderList
+        });
+    });
+});
+
+app.post("/sellInvoice", (req, res) => {
+    res.redirect("/sellInvoice")
+});
+
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
