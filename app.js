@@ -251,9 +251,12 @@ app.post("/SellItem", (req, res) => {
 });
 
 app.get("/sellInvoice", (req, res) => {
+    const start = Date.now();
+
     Order.find({}, (err, orderList) => {
         res.render("sellInvoice", {
-            orderList: orderList
+            orderList: orderList,
+            date: start
         });
     });
 });
